@@ -1,82 +1,38 @@
-# 🌸 Cycle-nao - Calculateur de Cycle Menstruel
+# Cycle-nao
 
-## 📱 À propos du projet
+Application web de suivi du cycle menstruel développée avec Next.js et Tailwind CSS.
 
-**Cycle-nao** est une application web simple et intuitive qui aide les femmes à suivre leur cycle menstruel. Elle calcule automatiquement les dates importantes comme l'ovulation et les périodes fertiles, le tout dans une interface moderne et facile à utiliser.
+## À propos
 
-## ✨ Fonctionnalités principales
+Cycle-nao est un outil simple qui permet de calculer les dates clés du cycle menstruel (date d'ovulation, fenêtre de fertilité, prochaines règles). Toutes les données sont enregistrées localement sur le navigateur de l'utilisateur (`localStorage`) sans aucun envoi vers des serveurs externes.
 
-### 📅 Calculs automatiques
-- **Date d'ovulation** estimée
-- **Période fertile** (6 jours de fertilité maximale)
-- **Prochaines règles** prévues
-- **Date de fin** des règles actuelles
+## Fonctionnalités
 
-### 🎨 Interface élégante
-- **Design moderne** et professionnel
-- **Adapté aux mobiles** et tablettes
-- **Couleurs douces** et agréables
-- **Animations fluides**
+- **Calculs estimatifs du cycle** : ovulation, période fertile, prochaines règles.
+- **Paramétrage personnalisable** : durée du cycle, durée des règles, durée de la phase lutéale.
+- **Calendrier mensuel interactif** : affichage coloré des différentes phases.
+- **Confidentialité** : fonctionnement hors-ligne, aucun compte requis.
 
-### 🔄 Suivi intelligent
-- **4 phases du cycle** visualisées
-- **Calendrier interactif** avec codes couleurs
-- **Sauvegarde automatique** de vos préférences
-- **Prédictions** basées sur vos données
+## Stack technique
 
-## 🚀 Comment l'utiliser ?
+- **Framework** : Next.js 16 (App Router) & React 19
+- **Styles** : Tailwind CSS v4
+- **Icônes** : Lucide React
+- **Langage** : TypeScript
 
-### 1. **Saisie simple**
-- Entrez la date de début de vos règles
-- Choisissez la durée habituelle de votre cycle (28 jours par défaut)
-- Indiquez combien de temps durent vos règles
+## Installation et démarrage
 
-### 2. **Résultats instantanés**
-L'application calcule immédiatement :
-- ✅ Quand vous ovulerez
-- ✅ Votre période de fertilité
-- ✅ La date de vos prochaines règles
+```bash
+# Installation des dépendances
+npm install
 
-### 3. **Visualisation claire**
-- 📊 Un calendrier coloré montre chaque jour du cycle
-- 🎯 Les dates importantes sont mises en évidence
-- 📱 Tout est optimisé pour votre téléphone
+# Lancer le serveur de développement
+npm run dev
 
-## 📱 Compatibilité
+# Compiler pour la production
+npm run build
+```
 
-- **Téléphones** : iPhone, Android (toutes tailles)
-- **Tablettes** : iPad, Android tablets
-- **Ordinateurs** : Mac, Windows
-- **Navigateurs** : Chrome, Safari, Firefox, Edge
+## Avertissement
 
-## 🔒 Confidentialité
-
-**Vos données restent privées :**
-- ✅ Aucun enregistrement sur internet
-- ✅ Tout est stocké sur votre appareil
-- ✅ Pas de connexion nécessaire
-- ✅ Pas de création de compte
-
-## ⚠️ Avertissement important
-
-Cette application fournit des **estimations** basées sur des moyennes. Elle ne remplace **pas** un avis médical professionnel. Consultez toujours un·e médecin pour des conseils personnalisés.
-
-## 💡 Pourquoi utiliser Cycle-nao ?
-
-- **Gratuit** : Pas d'achats dans l'application
-- **Simple** : Interface intuitive, pas de complications
-- **Pratique** : Accès rapide sur votre téléphone
-- **Utile** : Pour la contraception naturelle ou la conception
-
-## 🆘 Support
-
-En cas de problème :
-1. Vérifiez que vous utilisez une date valide
-2. Essayez de rafraîchir la page
-3. Contactez-nous si le problème persiste
-
----
-
-**Développé avec soin pour votre bien-être quotidien** 💜
-
-*"Prendre soin de sa santé, simplement et efficacement"*
+Les prédictions fournies par cette application sont basées sur des modèles statistiques moyens. Elles ne constituent en aucun cas un avis médical ni une méthode contraceptive garantis.

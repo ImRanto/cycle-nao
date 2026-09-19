@@ -55,11 +55,10 @@ export const ModernCreatorPanel: React.FC = () => {
         </div>
       )}
 
-      {/* PANNEAU DÉROULANT */}
       <div
         className={`
-          bg-white border-l border-y border-gray-100 shadow-2xl
-          rounded-l-4xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden
+          bg-white border-l border-y border-gray-200 shadow-xl
+          rounded-l-2xl transition-all duration-500 ease-in-out overflow-hidden
           ${
             isExpanded
               ? "w-[320px] sm:w-[360px] opacity-100 translate-x-0"
@@ -67,36 +66,32 @@ export const ModernCreatorPanel: React.FC = () => {
           }
         `}
       >
-        <div className="w-[320px] sm:w-[360px] p-6 sm:p-8 relative">
+        <div className="w-[320px] sm:w-[360px] p-6 relative">
           <button
             onClick={() => setIsExpanded(false)}
             aria-label="Fermer le panneau"
-            className="absolute top-5 right-5 p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-transform hover:rotate-90 duration-300"
+            className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-colors"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
 
-          {/* Profil */}
-          <div className="flex flex-col items-center text-center mt-4 mb-6">
-            <div className="w-16 h-16 bg-linear-to-tr from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg rotate-3 mb-4 transition-transform hover:rotate-0 duration-500">
-              <User size={32} className="text-white" />
+          <div className="flex flex-col items-center text-center mt-2 mb-6">
+            <div className="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center text-white shadow mb-3">
+              <User size={28} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-base font-semibold text-gray-900">
               Ranto Handraina
             </h3>
-            <p className="text-sm text-purple-600">Développeur Full-Stack</p>
+            <p className="text-xs text-purple-600 font-medium">Développeur Web</p>
           </div>
 
-          {/* Bio */}
-          <div className="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-100">
-            <p className="text-sm text-gray-600 leading-relaxed italic">
-              "Je conçois des applications qui allient beauté et utilité.
-              Cycle-nao est mon engagement pour une santé mieux comprise."
+          <div className="bg-gray-50 rounded-xl p-3.5 mb-5 border border-gray-100">
+            <p className="text-xs text-gray-600 leading-relaxed">
+              Cycle-nao est un calculateur de cycle menstruel conçu pour offrir des prédictions claires et confidentielles.
             </p>
           </div>
 
-          {/* Contacts */}
-          <div className="space-y-2 mb-6">
+          <div className="space-y-2 mb-5">
             <ContactLink
               icon={<Mail size={14} />}
               label="Email"
@@ -125,16 +120,8 @@ export const ModernCreatorPanel: React.FC = () => {
             </div>
           </div>
 
-          {/* Footer */}
-          <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[10px] text-gray-400">
-              <Heart
-                size={10}
-                className="text-rose-500 fill-rose-500 animate-pulse"
-              />
-              <span>Fait avec passion • 2026</span>
-            </div>
-            <Zap size={12} className="text-amber-400" />
+          <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+            <span>Cycle-nao © {new Date().getFullYear()}</span>
           </div>
         </div>
       </div>
