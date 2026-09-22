@@ -6,8 +6,28 @@ import {
 } from "../types/cycle.types";
 import { Droplets, Sprout, Egg, Moon } from "lucide-react";
 
+// Parses a "YYYY-MM-DD" string as a local Date at 00:00:00 local time
+export const parseLocalDate = (dateStr: string): Date => {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
+};
+
+// Returns a Date normalized to local midnight (00:00:00 local time)
+export const getLocalToday = (): Date => {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+};
+
+// Formats a local Date object into a "YYYY-MM-DD" string
+export const formatYYYYMMDD = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
 export const calculateCycle = (data: CycleData): CycleResults => {
-  const startDate = new Date(data.startDate);
+  const startDate = parseLocalDate(data.startDate);
   const cycleLength = data.cycleLength;
   const periodLength = data.periodLength || 5;
   const lutealPhaseLength = data.lutealPhaseLength || 14;
@@ -33,11 +53,9 @@ export const calculateCycle = (data: CycleData): CycleResults => {
   nextPeriod.setDate(nextPeriod.getDate() + cycleLength);
 
   // Jour actuel du cycle
-  const today = new Date();
-  const cycleDay =
-    Math.floor(
-      (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
-    ) + 1;
+  const today = getLocalToday();
+  const diffMs = today.getTime() - startDate.getTime();
+  const cycleDay = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1;
 
   // Déterminer la phase actuelle
   let currentPhase: CycleResults["currentPhase"] = "menstrual";
@@ -60,14 +78,14 @@ export const calculateCycle = (data: CycleData): CycleResults => {
   }
 
   return {
-    ovulationDate: ovulationDate.toISOString().split("T")[0],
+    ovulationDate: formatYYYYMMDD(ovulationDate),
     fertileWindow: {
-      start: fertileStart.toISOString().split("T")[0],
-      end: fertileEnd.toISOString().split("T")[0],
+      start: formatYYYYMMDD(fertileStart),
+      end: formatYYYYMMDD(fertileEnd),
     },
-    nextPeriod: nextPeriod.toISOString().split("T")[0],
+    nextPeriod: formatYYYYMMDD(nextPeriod),
     cycleDay: cycleDay > 0 && cycleDay <= cycleLength ? cycleDay : 0,
-    periodEndDate: periodEndDate.toISOString().split("T")[0],
+    periodEndDate: formatYYYYMMDD(periodEndDate),
     currentPhase,
     phaseProgress: Math.min(Math.max(phaseProgress, 0), 100),
     lutealPhaseLength,
@@ -83,8 +101,8 @@ export const generateMonthlyCalendar = (
   lutealPhaseLength: number
 ): MonthlyCalendarDay[] => {
   try {
-    const today = new Date();
-    const todayStr = today.toISOString().split("T")[0];
+    const today = getLocalToday();
+    const todayStr = formatYYYYMMDD(today);
 
     // Premier jour du mois
     const firstDay = new Date(year, month, 1);
@@ -97,13 +115,13 @@ export const generateMonthlyCalendar = (
     const firstDayOfWeek = (firstDay.getDay() + 6) % 7;
 
     const calendarDays: MonthlyCalendarDay[] = [];
-    const startDateObj = new Date(cycleStartDate);
+    const startDateObj = parseLocalDate(cycleStartDate);
 
     // Remplir les cases vides avant le premier jour du mois
     for (let i = 0; i < firstDayOfWeek; i++) {
       const d = new Date(firstDay);
       d.setDate(d.getDate() - (firstDayOfWeek - i));
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatYYYYMMDD(d);
       const dayOfWeek = (d.getDay() + 6) % 7;
       const cycleDayNum = getCycleDayForDate(d, startDateObj, cycleLength);
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
@@ -128,7 +146,7 @@ export const generateMonthlyCalendar = (
     // Jours du mois
     for (let day = 1; day <= daysInMonth; day++) {
       const d = new Date(year, month, day);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatYYYYMMDD(d);
       const dayOfWeek = (d.getDay() + 6) % 7;
       const cycleDayNum = getCycleDayForDate(d, startDateObj, cycleLength);
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
@@ -154,7 +172,7 @@ export const generateMonthlyCalendar = (
     const remaining = 42 - calendarDays.length;
     for (let i = 1; i <= remaining; i++) {
       const d = new Date(year, month + 1, i);
-      const dateStr = d.toISOString().split("T")[0];
+      const dateStr = formatYYYYMMDD(d);
       const dayOfWeek = (d.getDay() + 6) % 7;
       const cycleDayNum = getCycleDayForDate(d, startDateObj, cycleLength);
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
@@ -184,13 +202,19 @@ export const generateMonthlyCalendar = (
 };
 
 // Calcule le jour du cycle pour une date donnée (en projetant le cycle dans le passé et le futur)
-const getCycleDayForDate = (
+export const getCycleDayForDate = (
   date: Date,
   cycleStartDate: Date,
   cycleLength: number
 ): number => {
-  const diffMs = date.getTime() - cycleStartDate.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const d1 = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const d2 = new Date(
+    cycleStartDate.getFullYear(),
+    cycleStartDate.getMonth(),
+    cycleStartDate.getDate()
+  );
+  const diffMs = d1.getTime() - d2.getTime();
+  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
   // Utiliser le modulo pour gérer les cycles passés et futurs
   let cycleDay = (diffDays % cycleLength) + 1;
   // Gérer les jours négatifs (avant la première date de cycle)
@@ -213,7 +237,7 @@ const getPhaseForDay = (
 };
 
 export const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = parseLocalDate(dateString);
   return date.toLocaleDateString("fr-FR", {
     weekday: "long",
     year: "numeric",
@@ -223,7 +247,7 @@ export const formatDate = (dateString: string): string => {
 };
 
 export const formatShortDate = (dateString: string): string => {
-  const date = new Date(dateString);
+  const date = parseLocalDate(dateString);
   return date.toLocaleDateString("fr-FR", {
     day: "numeric",
     month: "short",
