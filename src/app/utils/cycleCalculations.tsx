@@ -42,11 +42,12 @@ export const calculateCycle = (data: CycleData): CycleResults => {
     ovulationDate.getDate() + (cycleLength - lutealPhaseLength)
   );
 
-  // Fenêtre fertile = 5 jours avant l'ovulation + jour de l'ovulation
+  // Fenêtre fertile = 5 jours avant l'ovulation + jour de l'ovulation + 1 jour après (J-5 à J+1)
   const fertileStart = new Date(ovulationDate);
   fertileStart.setDate(fertileStart.getDate() - 5);
 
   const fertileEnd = new Date(ovulationDate);
+  fertileEnd.setDate(fertileEnd.getDate() + 1);
 
   // Prochaine période = Date de début + cycleLength
   const nextPeriod = new Date(startDate);
@@ -127,7 +128,7 @@ export const generateMonthlyCalendar = (
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
       const ovulationDay = cycleLength - lutealPhaseLength;
       const fertileStartDay = ovulationDay - 5;
-      const fertileEndDay = ovulationDay;
+      const fertileEndDay = ovulationDay + 1;
 
       calendarDays.push({
         date: dateStr,
@@ -152,7 +153,7 @@ export const generateMonthlyCalendar = (
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
       const ovulationDay = cycleLength - lutealPhaseLength;
       const fertileStartDay = ovulationDay - 5;
-      const fertileEndDay = ovulationDay;
+      const fertileEndDay = ovulationDay + 1;
 
       calendarDays.push({
         date: dateStr,
@@ -178,7 +179,7 @@ export const generateMonthlyCalendar = (
       const phaseInfo = getPhaseForDay(cycleDayNum, cycleLength, periodLength, lutealPhaseLength);
       const ovulationDay = cycleLength - lutealPhaseLength;
       const fertileStartDay = ovulationDay - 5;
-      const fertileEndDay = ovulationDay;
+      const fertileEndDay = ovulationDay + 1;
 
       calendarDays.push({
         date: dateStr,

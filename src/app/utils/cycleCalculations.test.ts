@@ -45,6 +45,8 @@ describe("cycleCalculations", () => {
       expect(results.cycleDay).toBe(1);
       expect(results.currentPhase).toBe("menstrual");
       expect(results.ovulationDate).toBe("2025-03-29");
+      expect(results.fertileWindow.start).toBe("2025-03-24");
+      expect(results.fertileWindow.end).toBe("2025-03-30");
       expect(results.nextPeriod).toBe("2025-04-12");
     });
 
