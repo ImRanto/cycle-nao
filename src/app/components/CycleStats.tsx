@@ -93,13 +93,13 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
                 {formatFertileRange()}
               </div>
               <p className="text-xs text-gray-400 mt-0.5">
-                6 jours de fertilité
+                7 jours de fertilité
               </p>
             </div>
 
             {/* Jours fertiles */}
             <div className="mt-2 flex justify-center gap-1">
-              {[...Array(6)].map((_, i) => {
+              {[...Array(7)].map((_, i) => {
                 const date = new Date(results.fertileWindow.start);
                 date.setDate(date.getDate() + i);
                 const isOvulation = date.toISOString().split("T")[0] === results.ovulationDate;

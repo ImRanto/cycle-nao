@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { getPhaseInfo } from "../utils/cycleCalculations";
+import { getPhaseInfo } from "../utils/phaseInfo";
 import { Moon } from "lucide-react";
 
 interface PhaseIndicatorProps {

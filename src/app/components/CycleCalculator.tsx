@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { CycleData, CycleResults } from "../types/cycle.types";
-import {
-  calculateCycle,
-  formatDate,
-  formatShortDate,
-} from "../utils/cycleCalculations";
+import { calculateCycle } from "../utils/cycleCalculations";
 import CycleCalendar from "./CycleCalendar";
 import CycleStats from "./CycleStats";
 import PhaseIndicator from "./PhaseIndicator";
-import { Calendar, Droplets, Moon, Save, Target, FileText, BarChart3, Lightbulb, AlertTriangle } from "lucide-react";
+import { StartDateField } from "./form/StartDateField";
+import { CycleLengthField } from "./form/CycleLengthField";
+import { PeriodLengthField } from "./form/PeriodLengthField";
+import { LutealPhaseField } from "./form/LutealPhaseField";
+import {
+  Save,
+  FileText,
+  BarChart3,
+  Lightbulb,
+  AlertTriangle,
+} from "lucide-react";
 
 const CycleCalculator: React.FC = () => {
   const [mounted, setMounted] = useState(false);
@@ -36,7 +42,7 @@ const CycleCalculator: React.FC = () => {
   });
 
   const [results, setResults] = useState<CycleResults | null>(null);
-  const [isCalculated, setIsCalculated] = useState(false);
+  const [, setIsCalculated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -53,7 +59,10 @@ const CycleCalculator: React.FC = () => {
         calculateAndSetResults(defaultData);
       }
     } catch (error) {
-      console.error("Erreur lors de la lecture des données sauvegardées:", error);
+      console.error(
+        "Erreur lors de la lecture des données sauvegardées:",
+        error
+      );
       const defaultData = { ...cycleData, startDate: todayStr };
       calculateAndSetResults(defaultData);
     }
@@ -80,10 +89,16 @@ const CycleCalculator: React.FC = () => {
 
     // Validation: periodLength must be less than cycleLength
     if (name === "periodLength" && typeof newValue === "number") {
-      updatedData.periodLength = Math.min(newValue, updatedData.cycleLength - 1);
+      updatedData.periodLength = Math.min(
+        newValue,
+        updatedData.cycleLength - 1
+      );
     }
     if (name === "cycleLength" && typeof newValue === "number") {
-      updatedData.periodLength = Math.min(cycleData.periodLength, newValue - 1);
+      updatedData.periodLength = Math.min(
+        cycleData.periodLength,
+        newValue - 1
+      );
     }
 
     setCycleData(updatedData);
@@ -94,7 +109,7 @@ const CycleCalculator: React.FC = () => {
     }
   };
 
-  const handleQuickSelect = (days: number) => {
+  const handleQuickSelectCycleLength = (days: number) => {
     const updatedData = {
       ...cycleData,
       cycleLength: days,
@@ -105,18 +120,17 @@ const CycleCalculator: React.FC = () => {
     calculateAndSetResults(updatedData);
   };
 
+  const handleSelectLutealPhase = (val: number) => {
+    const updatedData = { ...cycleData, lutealPhaseLength: val };
+    setCycleData(updatedData);
+    calculateAndSetResults(updatedData);
+  };
+
   const handleSave = () => {
     localStorage.setItem("lastCycleData", JSON.stringify(cycleData));
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2000);
   };
-
-  const quickCycleOptions = [
-    { days: 26, label: "Court" },
-    { days: 28, label: "Standard" },
-    { days: 30, label: "Long" },
-    { days: 32, label: "Très long" },
-  ];
 
   return (
     <div className="min-h-screen bg-linear-to-r from-gray-50 to-purple-50 p-0 md:p-8">
@@ -149,7 +163,19 @@ const CycleCalculator: React.FC = () => {
                       <FileText className="w-7 h-7 text-white" />
                     </div>
                     <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-400 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                      <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={3}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
                     </div>
                   </div>
                   <div className="ml-4">
@@ -163,268 +189,72 @@ const CycleCalculator: React.FC = () => {
                 </div>
 
                 <form className="space-y-6">
-                {/* Date de début — Premium Glass */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent"></div>
-                  <div className="absolute top-0 right-0 w-24 h-24 bg-purple-300/20 rounded-full -translate-y-8 translate-x-8 blur-2xl"></div>
+                  <StartDateField
+                    cycleData={cycleData}
+                    onChange={handleInputChange}
+                    mounted={mounted}
+                    todayDisplay={todayDisplay}
+                  />
 
-                  <div className="relative z-10 p-6">
-                    <div className="flex items-center gap-3 mb-5">
-                      <div className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center border border-purple-100 shadow-sm">
-                        <Calendar className="w-5 h-5 text-purple-600" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Date de début des règles
-                        </h3>
-                        <p className="text-xs text-gray-400">Sélectionnez la date de vos dernières règles</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <label htmlFor="startDate" className="sr-only">
-                        Date de début des règles
-                      </label>
-                      <input
-                        type="date"
-                        id="startDate"
-                        name="startDate"
-                        value={cycleData.startDate}
-                        onChange={handleInputChange}
-                        aria-label="Date de début des règles"
-                        className="flex-1 px-5 py-4 bg-white/60 backdrop-blur-sm border-2 border-purple-200/60 rounded-xl focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300 text-lg text-gray-800"
-                        required
-                      />
-                      <div className="sm:w-48 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200/60">
-                        <div className="text-xs text-gray-400 uppercase tracking-wider font-medium">Aujourd'hui</div>
-                        <div className="font-bold text-gray-800 text-lg mt-0.5">
-                          {mounted ? todayDisplay : "\u00A0"}
-                        </div>
-                      </div>
-                    </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <CycleLengthField
+                      cycleData={cycleData}
+                      onChange={handleInputChange}
+                      onQuickSelect={handleQuickSelectCycleLength}
+                    />
+
+                    <PeriodLengthField
+                      cycleData={cycleData}
+                      onChange={handleInputChange}
+                      results={results}
+                    />
                   </div>
-                </div>
 
-                {/* Durées — Premium Glass */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Durée du cycle */}
-                  <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-transparent"></div>
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-violet-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
+                  <LutealPhaseField
+                    cycleData={cycleData}
+                    onChange={handleInputChange}
+                    onSelectValue={handleSelectLutealPhase}
+                  />
 
-                    <div className="relative z-10 p-6">
-                      <div className="flex items-center gap-3 mb-5">
-                        <div className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center border border-violet-100 shadow-sm">
-                          <Target className="w-5 h-5 text-violet-600" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Durée du cycle
-                          </h3>
-                          <p className="text-xs text-gray-400">Typiquement 28 jours</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between mb-5">
-                        <label htmlFor="cycleLength" className="text-sm text-gray-500">
-                          Nombre de jours
-                        </label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="number"
-                            id="cycleLength"
-                            name="cycleLength"
-                            min="22"
-                            max="45"
-                            value={cycleData.cycleLength}
-                            onChange={handleInputChange}
-                            aria-label="Durée du cycle en jours"
-                            className="w-20 px-3 py-2 text-center text-2xl font-extrabold text-violet-600 bg-white/60 backdrop-blur-sm border-2 border-violet-200/60 rounded-xl focus:border-violet-500 focus:ring-2 focus:ring-violet-200 transition-all tabular-nums"
-                          />
-                          <span className="text-sm text-gray-400" aria-hidden="true">j</span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {quickCycleOptions.map((option) => (
-                          <button
-                            key={option.days}
-                            type="button"
-                            onClick={() => handleQuickSelect(option.days)}
-                            aria-label={`Cycle de ${option.days} jours - ${option.label}`}
-                            aria-pressed={cycleData.cycleLength === option.days}
-                            className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                              cycleData.cycleLength === option.days
-                                ? "bg-violet-600 text-white shadow-lg shadow-violet-500/25 scale-105"
-                                : "bg-white/50 text-gray-600 hover:bg-white/80 border border-gray-200/50"
-                            }`}
+                  {/* Bouton d'enregistrement — Premium */}
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    className="group relative w-full overflow-hidden rounded-2xl shadow-xl shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5"
+                  >
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-600 via-violet-600 to-pink-600"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 py-4 px-6 flex items-center justify-center gap-3">
+                      {isSaved ? (
+                        <>
+                          <svg
+                            className="w-5 h-5 text-white"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
                           >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
+                          </svg>
+                          <span className="text-white font-semibold text-lg">
+                            Enregistré !
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <Save className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
+                          <span className="text-white font-semibold text-lg">
+                            Enregistrer mes préférences
+                          </span>
+                        </>
+                      )}
                     </div>
-                  </div>
-
-                  {/* Durée des règles */}
-                  <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-                    <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 via-pink-500/5 to-transparent"></div>
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-rose-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
-
-                    <div className="relative z-10 p-6">
-                      <div className="flex items-center gap-3 mb-5">
-                        <div className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center border border-rose-100 shadow-sm">
-                          <Droplets className="w-5 h-5 text-rose-600" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            Durée des règles
-                          </h3>
-                          <p className="text-xs text-gray-400">Typiquement 3-7 jours</p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between mb-5">
-                        <label htmlFor="periodLength" className="text-sm text-gray-500">
-                          Nombre de jours
-                        </label>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="number"
-                            id="periodLength"
-                            name="periodLength"
-                            min="1"
-                            max={cycleData.cycleLength - 1}
-                            value={cycleData.periodLength}
-                            onChange={handleInputChange}
-                            aria-label="Durée des règles en jours"
-                            className="w-20 px-3 py-2 text-center text-2xl font-extrabold text-rose-600 bg-white/60 backdrop-blur-sm border-2 border-rose-200/60 rounded-xl focus:border-rose-500 focus:ring-2 focus:ring-rose-200 transition-all tabular-nums"
-                          />
-                          <span className="text-sm text-gray-400" aria-hidden="true">j</span>
-                        </div>
-                      </div>
-
-                      {/* Date de fin estimée */}
-                      <div className="p-3 bg-white/50 backdrop-blur-sm rounded-xl border border-rose-100/50">
-                        <div className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-1">
-                          Fin estimée
-                        </div>
-                        <div className="text-lg font-bold text-rose-600">
-                          {results ? formatShortDate(results.periodEndDate) : "\u00A0"}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Phase lutéale — Style classique */}
-                <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-transparent"></div>
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-indigo-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
-
-                  <div className="relative z-10 p-6">
-                    {/* En-tête */}
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white/80 backdrop-blur-sm rounded-xl flex items-center justify-center border border-indigo-100 shadow-sm">
-                          <Moon className="w-5 h-5 text-indigo-600" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">Phase lutéale</h3>
-                          <p className="text-xs text-gray-400">Après l'ovulation · standard 14 jours</p>
-                        </div>
-                      </div>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-4xl font-extrabold text-indigo-600 tabular-nums">
-                          {cycleData.lutealPhaseLength}
-                        </span>
-                        <span className="text-sm font-medium text-gray-400">j</span>
-                      </div>
-                    </div>
-
-                    {/* Barre de progression */}
-                    <div className="mb-5">
-                      <div className="flex justify-between text-xs text-gray-400 mb-2">
-                        <span>Court</span>
-                        <span>Standard</span>
-                        <span>Long</span>
-                      </div>
-                      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-indigo-400 via-purple-400 to-violet-400 rounded-full transition-all duration-500 ease-out"
-                          style={{ width: `${((cycleData.lutealPhaseLength - 10) / 8) * 100}%` }}
-                        ></div>
-                      </div>
-                    </div>
-
-                    {/* Slider */}
-                    <div className="mb-4">
-                      <label htmlFor="lutealPhaseLength" className="sr-only">
-                        Durée de la phase lutéale en jours
-                      </label>
-                      <input
-                        type="range"
-                        id="lutealPhaseLength"
-                        name="lutealPhaseLength"
-                        min="10"
-                        max="18"
-                        value={cycleData.lutealPhaseLength}
-                        onChange={handleInputChange}
-                        aria-label="Durée de la phase lutéale en jours"
-                        aria-valuemin={10}
-                        aria-valuemax={18}
-                        aria-valuenow={cycleData.lutealPhaseLength}
-                        aria-valuetext={`${cycleData.lutealPhaseLength} jours`}
-                        className="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-indigo-600 [&::-webkit-slider-thumb]:shadow-md [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:hover:scale-110 [&::-webkit-slider-thumb]:transition-transform [&::-webkit-slider-thumb]:duration-200"
-                      />
-                    </div>
-
-                    {/* Chips de sélection rapide */}
-                    <div className="flex gap-2">
-                      {[10, 11, 12, 13, 14, 15, 16, 17, 18].map((val) => (
-                        <button
-                          key={val}
-                          type="button"
-                          onClick={() => {
-                            const updatedData = { ...cycleData, lutealPhaseLength: val };
-                            setCycleData(updatedData);
-                            calculateAndSetResults(updatedData);
-                          }}
-                          className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                            cycleData.lutealPhaseLength === val
-                              ? "bg-indigo-600 text-white shadow-lg shadow-indigo-500/25 scale-105"
-                              : "bg-white/50 text-gray-600 hover:bg-white/80 border border-gray-200/50"
-                          }`}
-                        >
-                          {val}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Bouton d'enregistrement — Premium */}
-                <button
-                  type="button"
-                  onClick={handleSave}
-                  className="group relative w-full overflow-hidden rounded-2xl shadow-xl shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5"
-                >
-                  <div className="absolute inset-0 bg-linear-to-r from-purple-600 via-violet-600 to-pink-600"></div>
-                  <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10 py-4 px-6 flex items-center justify-center gap-3">
-                    {isSaved ? (
-                      <>
-                        <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                        <span className="text-white font-semibold text-lg">Enregistré !</span>
-                      </>
-                    ) : (
-                      <>
-                        <Save className="w-5 h-5 text-white group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="text-white font-semibold text-lg">Enregistrer mes préférences</span>
-                      </>
-                    )}
-                  </div>
-                </button>
-              </form>
+                  </button>
+                </form>
               </div>
             </div>
 
