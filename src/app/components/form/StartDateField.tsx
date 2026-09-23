@@ -19,8 +19,8 @@ export const StartDateField: React.FC<StartDateFieldProps> = ({
 }) => {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-24 h-24 bg-purple-300/20 rounded-full -translate-y-8 translate-x-8 blur-2xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent" />
+      <div className="absolute top-0 right-0 w-24 h-24 bg-purple-300/20 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
 
       <div className="relative z-10 p-6">
         <div className="flex items-center gap-3 mb-5">

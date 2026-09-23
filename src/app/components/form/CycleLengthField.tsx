@@ -10,7 +10,7 @@ interface CycleLengthFieldProps {
   onQuickSelect: (days: number) => void;
 }
 
-const quickCycleOptions = [
+const CYCLE_PRESETS = [
   { days: 26, label: "Court" },
   { days: 28, label: "Standard" },
   { days: 30, label: "Long" },
@@ -24,8 +24,8 @@ export const CycleLengthField: React.FC<CycleLengthFieldProps> = ({
 }) => {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-20 h-20 bg-violet-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-500/10 via-purple-500/5 to-transparent" />
+      <div className="absolute top-0 right-0 w-20 h-20 bg-violet-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl" />
 
       <div className="relative z-10 p-6">
         <div className="flex items-center gap-3 mb-5">
@@ -63,20 +63,20 @@ export const CycleLengthField: React.FC<CycleLengthFieldProps> = ({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {quickCycleOptions.map((option) => (
+          {CYCLE_PRESETS.map((preset) => (
             <button
-              key={option.days}
+              key={preset.days}
               type="button"
-              onClick={() => onQuickSelect(option.days)}
-              aria-label={`Cycle de ${option.days} jours - ${option.label}`}
-              aria-pressed={cycleData.cycleLength === option.days}
+              onClick={() => onQuickSelect(preset.days)}
+              aria-label={`Cycle de ${preset.days} jours - ${preset.label}`}
+              aria-pressed={cycleData.cycleLength === preset.days}
               className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
-                cycleData.cycleLength === option.days
+                cycleData.cycleLength === preset.days
                   ? "bg-violet-600 text-white shadow-lg shadow-violet-500/25 scale-105"
                   : "bg-white/50 text-gray-600 hover:bg-white/80 border border-gray-200/50"
               }`}
             >
-              {option.label}
+              {preset.label}
             </button>
           ))}
         </div>

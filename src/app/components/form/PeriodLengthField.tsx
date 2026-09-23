@@ -18,8 +18,8 @@ export const PeriodLengthField: React.FC<PeriodLengthFieldProps> = ({
 }) => {
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/40 shadow-lg">
-      <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 via-pink-500/5 to-transparent"></div>
-      <div className="absolute top-0 right-0 w-20 h-20 bg-rose-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 via-pink-500/5 to-transparent" />
+      <div className="absolute top-0 right-0 w-20 h-20 bg-rose-300/20 rounded-full -translate-y-6 translate-x-6 blur-2xl" />
 
       <div className="relative z-10 p-6">
         <div className="flex items-center gap-3 mb-5">
@@ -56,7 +56,6 @@ export const PeriodLengthField: React.FC<PeriodLengthFieldProps> = ({
           </div>
         </div>
 
-        {/* Date de fin estimée */}
         <div className="p-3 bg-white/50 backdrop-blur-sm rounded-xl border border-rose-100/50">
           <div className="text-xs text-gray-400 uppercase tracking-wider font-medium mb-1">
             Fin estimée
