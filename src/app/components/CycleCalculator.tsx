@@ -42,88 +42,84 @@ const CycleCalculator: React.FC = () => {
   });
 
   const [results, setResults] = useState<CycleResults | null>(null);
-  const [, setIsCalculated] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     if (!todayStr) return;
     try {
-      const savedData = localStorage.getItem("lastCycleData");
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        setCycleData(parsedData);
-        calculateAndSetResults(parsedData);
+      const saved = localStorage.getItem("lastCycleData");
+      if (saved) {
+        const savedConfig = JSON.parse(saved);
+        setCycleData(savedConfig);
+        updateResults(savedConfig);
       } else {
-        const defaultData = { ...cycleData, startDate: todayStr };
-        setCycleData(defaultData);
-        calculateAndSetResults(defaultData);
+        const defaultConfig = { ...cycleData, startDate: todayStr };
+        setCycleData(defaultConfig);
+        updateResults(defaultConfig);
       }
     } catch (error) {
       console.error(
         "Erreur lors de la lecture des données sauvegardées:",
         error
       );
-      const defaultData = { ...cycleData, startDate: todayStr };
-      calculateAndSetResults(defaultData);
+      const defaultConfig = { ...cycleData, startDate: todayStr };
+      updateResults(defaultConfig);
     }
   }, [todayStr]);
 
-  const calculateAndSetResults = (data: CycleData) => {
-    const calculatedResults = calculateCycle(data);
-    setResults(calculatedResults);
-    setIsCalculated(true);
+  const updateResults = (config: CycleData) => {
+    const computed = calculateCycle(config);
+    setResults(computed);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type } = e.target;
 
-    let newValue: string | number = value;
+    let parsedVal: string | number = value;
     if (type === "number") {
-      newValue = Math.max(1, parseInt(value) || 0);
+      parsedVal = Math.max(1, parseInt(value) || 0);
     }
 
-    const updatedData = {
+    const nextData = {
       ...cycleData,
-      [name]: newValue,
+      [name]: parsedVal,
     };
 
-    // Validation: periodLength must be less than cycleLength
-    if (name === "periodLength" && typeof newValue === "number") {
-      updatedData.periodLength = Math.min(
-        newValue,
-        updatedData.cycleLength - 1
+    if (name === "periodLength" && typeof parsedVal === "number") {
+      nextData.periodLength = Math.min(
+        parsedVal,
+        nextData.cycleLength - 1
       );
     }
-    if (name === "cycleLength" && typeof newValue === "number") {
-      updatedData.periodLength = Math.min(
+    if (name === "cycleLength" && typeof parsedVal === "number") {
+      nextData.periodLength = Math.min(
         cycleData.periodLength,
-        newValue - 1
+        parsedVal - 1
       );
     }
 
-    setCycleData(updatedData);
+    setCycleData(nextData);
 
-    // Recalcul automatique si toutes les données sont valides
-    if (updatedData.startDate && updatedData.cycleLength > 1) {
-      calculateAndSetResults(updatedData);
+    if (nextData.startDate && nextData.cycleLength > 1) {
+      updateResults(nextData);
     }
   };
 
   const handleQuickSelectCycleLength = (days: number) => {
-    const updatedData = {
+    const nextData = {
       ...cycleData,
       cycleLength: days,
       periodLength: Math.min(cycleData.periodLength, days - 1),
     };
 
-    setCycleData(updatedData);
-    calculateAndSetResults(updatedData);
+    setCycleData(nextData);
+    updateResults(nextData);
   };
 
-  const handleSelectLutealPhase = (val: number) => {
-    const updatedData = { ...cycleData, lutealPhaseLength: val };
-    setCycleData(updatedData);
-    calculateAndSetResults(updatedData);
+  const handleSelectLutealPhase = (length: number) => {
+    const nextData = { ...cycleData, lutealPhaseLength: length };
+    setCycleData(nextData);
+    updateResults(nextData);
   };
 
   const handleSave = () => {
@@ -135,7 +131,6 @@ const CycleCalculator: React.FC = () => {
   return (
     <div className="min-h-screen bg-linear-to-r from-gray-50 to-purple-50 p-0 md:p-8">
       <div className="max-w-7xl mx-auto pr-0 md:pr-16 lg:pr-20">
-        {/* En-tête */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
             Calculateur de Cycle Intelligent
@@ -147,14 +142,12 @@ const CycleCalculator: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Colonne gauche - Formulaire */}
           <div className="lg:col-span-2 space-y-8">
-            {/* Carte principale du formulaire — Premium Glass */}
             <div className="relative overflow-hidden rounded-none md:rounded-3xl shadow-2xl">
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-xl"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-white to-pink-50/50"></div>
-              <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-200/30 rounded-full blur-3xl"></div>
-              <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-pink-200/20 rounded-full blur-3xl"></div>
+              <div className="absolute inset-0 bg-white/80 backdrop-blur-xl" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-white to-pink-50/50" />
+              <div className="absolute -top-20 -right-20 w-60 h-60 bg-purple-200/30 rounded-full blur-3xl" />
+              <div className="absolute -bottom-16 -left-16 w-48 h-48 bg-pink-200/20 rounded-full blur-3xl" />
 
               <div className="relative z-10 p-6 md:p-8">
                 <div className="flex items-center mb-8">
@@ -213,17 +206,16 @@ const CycleCalculator: React.FC = () => {
                   <LutealPhaseField
                     cycleData={cycleData}
                     onChange={handleInputChange}
-                    onSelectValue={handleSelectLutealPhase}
+                    onSelect={handleSelectLutealPhase}
                   />
 
-                  {/* Bouton d'enregistrement — Premium */}
                   <button
                     type="button"
                     onClick={handleSave}
                     className="group relative w-full overflow-hidden rounded-2xl shadow-xl shadow-purple-500/20 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5"
                   >
-                    <div className="absolute inset-0 bg-linear-to-r from-purple-600 via-violet-600 to-pink-600"></div>
-                    <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-600 via-violet-600 to-pink-600" />
+                    <div className="absolute inset-0 bg-linear-to-r from-purple-500 via-violet-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative z-10 py-4 px-6 flex items-center justify-center gap-3">
                       {isSaved ? (
                         <>
@@ -258,7 +250,6 @@ const CycleCalculator: React.FC = () => {
               </div>
             </div>
 
-            {/* Calendrier */}
             {results && (
               <CycleCalendar
                 startDate={cycleData.startDate}
@@ -269,7 +260,6 @@ const CycleCalculator: React.FC = () => {
             )}
           </div>
 
-          {/* Colonne droite - Résultats */}
           <div className="space-y-8">
             {results && (
               <>
@@ -279,7 +269,6 @@ const CycleCalculator: React.FC = () => {
                   phaseProgress={results.phaseProgress}
                 />
 
-                {/* Carte d'information */}
                 <div className="bg-linear-to-r from-white to-purple-50 rounded-none md:rounded-2xl shadow-xl p-6 border border-purple-100">
                   <div className="flex items-center gap-3 mb-4">
                     <BarChart3 className="w-5 h-5 text-gray-600" />
@@ -319,7 +308,6 @@ const CycleCalculator: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Rappel */}
                 <div className="bg-linear-to-r from-amber-50 to-orange-50 rounded-2xl shadow-lg p-6 border border-amber-200">
                   <div className="flex items-start">
                     <div className="w-10 h-10 bg-amber-500/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-amber-400/20 flex-shrink-0">
@@ -340,7 +328,6 @@ const CycleCalculator: React.FC = () => {
           </div>
         </div>
 
-        {/* Avertissement */}
         <div className="mt-12 p-6 bg-linear-to-r from-rose-50 to-pink-50 border border-rose-200 rounded-2xl shadow-sm">
           <div className="flex items-start">
             <div className="w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center flex-shrink-0">
@@ -361,7 +348,6 @@ const CycleCalculator: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer */}
         <footer className="mt-12 pt-8 border-t border-gray-200">
           <div className="text-center text-gray-500 text-sm">
             <p>

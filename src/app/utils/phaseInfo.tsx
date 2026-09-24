@@ -2,7 +2,7 @@ import React from "react";
 import { Droplets, Sprout, Egg, Moon } from "lucide-react";
 import { PhaseInfo } from "../types/cycle.types";
 
-export const getPhaseInfo = (phase: string): PhaseInfo => {
+export const getPhaseInfo = (phaseKey: string): PhaseInfo => {
   const phases: Record<string, PhaseInfo> = {
     menstrual: {
       name: "Menstruelle",
@@ -34,5 +34,5 @@ export const getPhaseInfo = (phase: string): PhaseInfo => {
     },
   };
 
-  return phases[phase] || phases.follicular;
+  return phases[phaseKey] || phases.follicular;
 };
