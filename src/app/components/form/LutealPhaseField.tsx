@@ -32,7 +32,7 @@ export const LutealPhaseField: React.FC<LutealPhaseFieldProps> = ({
             Phase lutéale
           </h3>
           <p className="text-xs text-slate-500">
-            Durée entre l'ovulation et les règles (défaut : 14j)
+            Nombre de jours entre l'ovulation et les règles suivantes (14j en général)
           </p>
         </div>
       </div>

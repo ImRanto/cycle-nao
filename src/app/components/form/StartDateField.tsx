@@ -25,16 +25,16 @@ export const StartDateField: React.FC<StartDateFieldProps> = ({
         </div>
         <div>
           <h3 className="text-base font-semibold text-slate-900">
-            Date de début des règles
+            Premier jour des règles
           </h3>
           <p className="text-xs text-slate-500">
-            Sélectionnez la date de vos dernières règles
+            Indiquez le premier jour de vos dernières règles
           </p>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row gap-3">
         <label htmlFor="startDate" className="sr-only">
-          Date de début des règles
+          Premier jour des règles
         </label>
         <input
           type="date"
@@ -42,7 +42,7 @@ export const StartDateField: React.FC<StartDateFieldProps> = ({
           name="startDate"
           value={cycleData.startDate}
           onChange={onChange}
-          aria-label="Date de début des règles"
+          aria-label="Premier jour des règles"
           className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl focus:border-purple-600 focus:ring-1 focus:ring-purple-200 transition-colors duration-200 text-base text-slate-800"
           required
         />

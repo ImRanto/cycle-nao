@@ -26,7 +26,7 @@ export const PeriodLengthField: React.FC<PeriodLengthFieldProps> = ({
           <h3 className="text-base font-semibold text-slate-900">
             Durée des règles
           </h3>
-          <p className="text-xs text-slate-500">Typiquement 3-7 jours</p>
+          <p className="text-xs text-slate-500">En général 3 à 7 jours</p>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export const PeriodLengthField: React.FC<PeriodLengthFieldProps> = ({
 
       <div className="p-3 bg-white border border-slate-200 rounded-xl">
         <div className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-0.5">
-          Fin estimée
+          Fin prévue
         </div>
         <div className="text-base font-bold text-rose-700">
           {results ? formatShortDate(results.periodEndDate) : "\u00A0"}

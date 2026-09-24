@@ -12,7 +12,7 @@ interface CycleLengthFieldProps {
 
 const CYCLE_PRESETS = [
   { days: 26, label: "Court" },
-  { days: 28, label: "Standard" },
+  { days: 28, label: "Moyen" },
   { days: 30, label: "Long" },
   { days: 32, label: "Très long" },
 ];
@@ -32,7 +32,7 @@ export const CycleLengthField: React.FC<CycleLengthFieldProps> = ({
           <h3 className="text-base font-semibold text-slate-900">
             Durée du cycle
           </h3>
-          <p className="text-xs text-slate-500">Typiquement 28 jours</p>
+          <p className="text-xs text-slate-500">En moyenne 28 jours</p>
         </div>
       </div>
 

@@ -124,8 +124,7 @@ export const ModernCreatorPanel: React.FC = () => {
 
           <div className="bg-slate-50 rounded-xl p-3.5 mb-5 border border-slate-200">
             <p className="text-xs text-slate-600 leading-relaxed italic">
-              "Je conçois des applications qui allient beauté et utilité.
-              Cycle-nao est mon engagement pour une santé mieux comprise."
+              "J'ai créé Cycle-nao pour proposer un outil simple, gratuit et respectueux de votre vie privée."
             </p>
           </div>
 

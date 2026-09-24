@@ -134,11 +134,10 @@ const CycleCalculator: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
-            Calculateur de Cycle Intelligent
+            Calculateur de cycle menstruel
           </h1>
           <p className="text-slate-600 max-w-3xl text-sm md:text-base">
-            Suivez votre cycle menstruel avec précision. Calculs automatiques,
-            prédictions fiables et interface sobre.
+            Obtenez vos repères de cycle en quelques secondes. Vos données restent sur votre appareil.
           </p>
         </div>
 
@@ -151,10 +150,10 @@ const CycleCalculator: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 tracking-tight">
-                    Informations du cycle
+                    Vos données de cycle
                   </h2>
                   <p className="text-xs text-slate-500">
-                    Renseignez vos données pour des calculs précis
+                    Saisissez vos informations pour calculer les dates
                   </p>
                 </div>
               </div>
@@ -200,7 +199,7 @@ const CycleCalculator: React.FC = () => {
                   ) : (
                     <>
                       <Save className="w-5 h-5 text-white" />
-                      <span>Enregistrer mes préférences</span>
+                      <span>Sauvegarder mes réglages</span>
                     </>
                   )}
                 </button>
@@ -230,7 +229,7 @@ const CycleCalculator: React.FC = () => {
                   <div className="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
                     <BarChart3 className="w-5 h-5 text-slate-600" />
                     <h3 className="text-lg font-bold text-slate-900">
-                      Statistiques du cycle
+                      Résumé du cycle
                     </h3>
                   </div>
 
@@ -271,11 +270,9 @@ const CycleCalculator: React.FC = () => {
                       <Lightbulb className="w-5 h-5 text-amber-700" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-amber-900 text-sm mb-1">Conseil</h4>
+                      <h4 className="font-bold text-amber-900 text-sm mb-1">Bon à savoir</h4>
                       <p className="text-amber-800 text-xs leading-relaxed">
-                        La phase lutéale est généralement constante. Si votre
-                        cycle varie, c'est souvent la phase folliculaire qui
-                        change.
+                        La durée de la phase lutéale varie peu d'un cycle à l'autre. Quand un cycle varie, c'est le plus souvent la première phase (folliculaire) qui s'allonge ou s'accourcit.
                       </p>
                     </div>
                   </div>
@@ -292,14 +289,10 @@ const CycleCalculator: React.FC = () => {
             </div>
             <div>
               <h4 className="font-bold text-rose-900 text-sm mb-1">
-                Avertissement médical
+                Information importante
               </h4>
               <p className="text-rose-800 text-xs leading-relaxed">
-                Cette application fournit des estimations basées sur des
-                moyennes statistiques et ne remplace pas un avis médical
-                professionnel. Consultez un professionnel de santé pour des
-                conseils personnalisés et pour toute question concernant votre
-                santé reproductive.
+                Ces dates sont des estimations indicatives basées sur des moyennes. Elles ne remplacent pas l'avis d'un professionnel de santé ni un moyen de contraception.
               </p>
             </div>
           </div>
@@ -308,10 +301,10 @@ const CycleCalculator: React.FC = () => {
         <footer className="mt-12 pt-8 border-t border-slate-200">
           <div className="text-center text-slate-500 text-xs">
             <p>
-              Cycle-nao by Ranto • Application de suivi menstruel •{" "}
+              Cycle-nao • Suivi du cycle menstruel •{" "}
               {currentYear || new Date().getFullYear()}
             </p>
-            <p className="mt-1">Conçu avec soin pour votre bien-être</p>
+            <p className="mt-1">Un outil simple pour suivre son rythme</p>
           </div>
         </footer>
       </div>
