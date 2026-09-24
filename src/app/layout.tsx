@@ -10,7 +10,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,9 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body
-        className={`bg-linear-to-br from-pink-50 to-purple-50`}
-      >
+      <body className="bg-slate-50 text-slate-900">
         <main className="min-h-screen">{children}</main>
       </body>
     </html>

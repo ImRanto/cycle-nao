@@ -7,20 +7,18 @@ interface FeatureCardProps {
   icon: React.ReactNode;
   title: string;
   desc: string;
-  color: string;
+  badgeBg: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, desc, color }) => (
-  <div className="group relative overflow-hidden bg-white/10 backdrop-blur-xl border border-white/20 p-5 rounded-2xl hover:bg-white/15 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/10">
-    <div className={`absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br ${color} rounded-full opacity-0 group-hover:opacity-20 blur-2xl transition-opacity duration-500`} />
-
-    <div className="relative z-10 flex items-center gap-4">
-      <div className={`w-12 h-12 bg-gradient-to-br ${color} rounded-xl flex items-center justify-center shadow-lg`}>
+const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, desc, badgeBg }) => (
+  <div className="bg-slate-800/80 border border-slate-700 p-5 rounded-xl hover:bg-slate-800 transition-colors duration-200">
+    <div className="flex items-center gap-4">
+      <div className={`w-11 h-11 ${badgeBg} rounded-xl flex items-center justify-center`}>
         <div className="text-white">{icon}</div>
       </div>
       <div>
         <h3 className="font-bold text-white text-sm">{title}</h3>
-        <p className="text-xs text-white/60 mt-0.5">{desc}</p>
+        <p className="text-xs text-slate-400 mt-0.5">{desc}</p>
       </div>
     </div>
   </div>
@@ -28,35 +26,23 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, desc, color }) =
 
 const Header: React.FC = () => {
   return (
-    <header className="relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-600 to-fuchsia-500" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(99,102,241,0.5),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(217,70,239,0.4),transparent_60%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.2),transparent_70%)]" />
-
-      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-white/10 rounded-full blur-[100px] animate-pulse-slow" />
-      <div className="absolute -bottom-24 -right-24 w-[400px] h-[400px] bg-pink-400/20 rounded-full blur-[80px]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-violet-400/10 rounded-full blur-[60px] animate-float" />
-
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <header className="relative bg-slate-900 border-b border-slate-800 overflow-hidden">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-20">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
           <div className="text-center lg:text-left flex-1">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-2xl text-sm font-medium mb-8 shadow-lg shadow-black/5">
-              <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-green-500 rounded-lg flex items-center justify-center">
+            <div className="inline-flex items-center gap-2 bg-slate-800 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium mb-6 text-slate-300">
+              <div className="w-5 h-5 bg-emerald-600 rounded-md flex items-center justify-center">
                 <Activity size={12} className="text-white" />
               </div>
-              <span className="text-white/90">Santé connectée & Privée</span>
-              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
+              <span>Santé connectée & Privée</span>
+              <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              <span className="text-white drop-shadow-lg">Cycle</span>
-              <span className="bg-gradient-to-r from-pink-300 via-rose-300 to-fuchsia-300 bg-clip-text text-transparent">-nao</span>
+            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-white">
+              Cycle<span className="text-purple-400">-nao</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-white/70 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
+            <p className="text-base md:text-lg text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
               Reprenez le contrôle. Une approche intuitive et élégante pour
               suivre votre cycle et comprendre votre corps.
             </p>
@@ -64,16 +50,16 @@ const Header: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <a
                 href="#calculator"
-                className="group relative inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-purple-700 font-bold rounded-2xl shadow-xl shadow-white/20 hover:shadow-2xl hover:shadow-white/30 transition-all duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition-colors duration-200 shadow-sm text-sm"
               >
-                <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                <Zap className="w-4 h-4" />
                 Commencer maintenant
               </a>
               <a
                 href="#features"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold rounded-2xl hover:bg-white/20 transition-all duration-300"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-semibold rounded-xl transition-colors duration-200 text-sm"
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4 text-slate-400" />
                 En savoir plus
               </a>
             </div>
@@ -81,39 +67,25 @@ const Header: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 w-full max-w-sm">
             <FeatureCard
-              icon={<Calendar size={22} />}
+              icon={<Calendar size={20} />}
               title="Cycle Intelligent"
               desc="Algorithmes prédictifs avancés"
-              color="from-blue-400 to-indigo-500"
+              badgeBg="bg-indigo-600"
             />
             <FeatureCard
-              icon={<Sparkles size={22} />}
+              icon={<Sparkles size={20} />}
               title="Prédictions"
               desc="Anticipez vos phases avec précision"
-              color="from-amber-400 to-orange-500"
+              badgeBg="bg-amber-600"
             />
             <FeatureCard
-              icon={<ShieldCheck size={22} />}
+              icon={<ShieldCheck size={20} />}
               title="Confidentialité"
               desc="Données 100% sécurisées & locales"
-              color="from-emerald-400 to-green-500"
+              badgeBg="bg-emerald-600"
             />
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
-          <path
-            d="M0 120L60 108C120 96 240 72 360 66C480 60 600 72 720 78C840 84 960 84 1080 78C1200 72 1320 60 1380 54L1440 48V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
-            fill="white"
-          />
-          <path
-            d="M0 120L60 114C120 108 240 96 360 90C480 84 600 84 720 90C840 96 960 108 1080 108C1200 108 1320 96 1380 90L1440 84V120H0Z"
-            fill="white"
-            fillOpacity="0.5"
-          />
-        </svg>
       </div>
     </header>
   );

@@ -28,20 +28,20 @@ const ContactLink: React.FC<ContactLinkProps> = ({ icon, label, value, href, col
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="group flex items-center gap-3 p-3 bg-white border border-gray-100 rounded-xl hover:border-purple-200 transition-all text-left"
+    className="group flex items-center gap-3 p-3 bg-white border border-slate-200 rounded-xl hover:border-purple-300 transition-colors duration-200 text-left"
   >
-    <div className={`p-2 bg-gray-50 rounded-lg group-hover:bg-white transition-colors ${color}`}>
+    <div className={`p-2 bg-slate-50 rounded-lg group-hover:bg-slate-100 transition-colors duration-200 ${color}`}>
       {icon}
     </div>
     <div className="flex-1 overflow-hidden">
-      <p className="text-[9px] text-gray-400 uppercase tracking-tight">
+      <p className="text-[9px] text-slate-400 uppercase tracking-tight">
         {label}
       </p>
-      <p className="text-xs font-medium text-gray-700 truncate">{value}</p>
+      <p className="text-xs font-medium text-slate-700 truncate">{value}</p>
     </div>
     <ExternalLink
       size={12}
-      className="text-gray-300 group-hover:text-purple-400 transition-colors"
+      className="text-slate-400 group-hover:text-purple-600 transition-colors duration-200"
     />
   </a>
 );
@@ -58,7 +58,7 @@ const SocialIcon: React.FC<SocialIconProps> = ({ icon, href, label }) => (
     target="_blank"
     rel="noopener noreferrer"
     aria-label={label}
-    className="flex-1 flex items-center justify-center p-3 bg-gray-50 rounded-xl text-gray-400 hover:bg-gray-900 hover:text-white transition-all shadow-sm"
+    className="flex-1 flex items-center justify-center p-3 bg-slate-100 rounded-xl text-slate-600 hover:bg-slate-900 hover:text-white transition-colors duration-200 shadow-xs"
   >
     {icon}
   </a>
@@ -66,7 +66,6 @@ const SocialIcon: React.FC<SocialIconProps> = ({ icon, href, label }) => (
 
 export const ModernCreatorPanel: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex items-center">
@@ -74,24 +73,17 @@ export const ModernCreatorPanel: React.FC = () => {
         <div className="relative flex items-center">
           <button
             onClick={() => setIsOpen(true)}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             aria-label="Ouvrir le panneau du développeur"
             aria-expanded={isOpen}
-            className="group relative bg-white border-l border-y border-gray-100 shadow-lg pl-4 pr-2 py-5 rounded-l-2xl transition-all duration-500 hover:pl-6 hover:bg-gray-50 active:scale-95"
+            className="group relative bg-white border-l border-y border-slate-200 shadow-md pl-3 pr-2 py-4 rounded-l-xl transition-colors duration-200 hover:bg-slate-50"
           >
-            <div className="flex flex-col items-center gap-3">
-              <ChevronLeft
-                className={`w-4 h-4 text-purple-400 transition-transform duration-500 ${
-                  isHovered ? "-translate-x-1" : ""
-                }`}
-              />
-
+            <div className="flex flex-col items-center gap-2">
+              <ChevronLeft className="w-4 h-4 text-purple-600" />
               <div className="relative">
-                <div className="w-9 h-9 bg-linear-to-br from-purple-600 to-pink-500 rounded-xl flex items-center justify-center text-white shadow-md">
-                  <User size={18} />
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                    <Crown size={8} className="text-white" />
+                <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-white">
+                  <User size={16} />
+                  <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-500 rounded-full flex items-center justify-center border border-white">
+                    <Crown size={7} className="text-white" />
                   </div>
                 </div>
               </div>
@@ -102,8 +94,8 @@ export const ModernCreatorPanel: React.FC = () => {
 
       <div
         className={`
-          bg-white border-l border-y border-gray-100 shadow-2xl
-          rounded-l-4xl transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden
+          bg-white border-l border-y border-slate-200 shadow-lg
+          rounded-l-2xl transition-all duration-300 ease-in-out overflow-hidden
           ${
             isOpen
               ? "w-[320px] sm:w-[360px] opacity-100 translate-x-0"
@@ -111,33 +103,33 @@ export const ModernCreatorPanel: React.FC = () => {
           }
         `}
       >
-        <div className="w-[320px] sm:w-[360px] p-6 sm:p-8 relative">
+        <div className="w-[320px] sm:w-[360px] p-6 relative">
           <button
             onClick={() => setIsOpen(false)}
             aria-label="Fermer le panneau"
-            className="absolute top-5 right-5 p-2 hover:bg-gray-100 rounded-full text-gray-400 transition-transform hover:rotate-90 duration-300"
+            className="absolute top-4 right-4 p-1.5 hover:bg-slate-100 rounded-lg text-slate-400 transition-colors duration-200"
           >
-            <X size={20} />
+            <X size={18} />
           </button>
 
-          <div className="flex flex-col items-center text-center mt-4 mb-6">
-            <div className="w-16 h-16 bg-linear-to-tr from-purple-600 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg rotate-3 mb-4 transition-transform hover:rotate-0 duration-500">
-              <User size={32} className="text-white" />
+          <div className="flex flex-col items-center text-center mt-2 mb-6">
+            <div className="w-14 h-14 bg-purple-600 rounded-2xl flex items-center justify-center text-white mb-3 shadow-sm">
+              <User size={28} />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-base font-semibold text-slate-900">
               Ranto Handraina
             </h3>
-            <p className="text-sm text-purple-600">Développeur Full-Stack</p>
+            <p className="text-xs text-purple-600 font-medium">Développeur Full-Stack</p>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-100">
-            <p className="text-sm text-gray-600 leading-relaxed italic">
+          <div className="bg-slate-50 rounded-xl p-3.5 mb-5 border border-slate-200">
+            <p className="text-xs text-slate-600 leading-relaxed italic">
               "Je conçois des applications qui allient beauté et utilité.
               Cycle-nao est mon engagement pour une santé mieux comprise."
             </p>
           </div>
 
-          <div className="space-y-2 mb-6">
+          <div className="space-y-2 mb-5">
             <ContactLink
               icon={<Mail size={14} />}
               label="Email"
@@ -150,7 +142,7 @@ export const ModernCreatorPanel: React.FC = () => {
               label="Portfolio"
               value="ranto-io.vercel.app"
               href="https://ranto-io.vercel.app"
-              color="text-orange-500"
+              color="text-amber-600"
             />
             <div className="flex gap-2">
               <SocialIcon
@@ -166,15 +158,12 @@ export const ModernCreatorPanel: React.FC = () => {
             </div>
           </div>
 
-          <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-[10px] text-gray-400">
-              <Heart
-                size={10}
-                className="text-rose-500 fill-rose-500 animate-pulse"
-              />
+          <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+            <div className="flex items-center gap-1.5">
+              <Heart size={11} className="text-rose-500 fill-rose-500" />
               <span>Fait avec passion • 2026</span>
             </div>
-            <Zap size={12} className="text-amber-400" />
+            <Zap size={12} className="text-amber-500" />
           </div>
         </div>
       </div>

@@ -41,26 +41,16 @@ interface LegendItemProps {
   color: string;
   icon: React.ReactNode;
   label: string;
-  textWhite?: boolean;
 }
 
-const LegendItem: React.FC<LegendItemProps> = ({
-  color,
-  icon,
-  label,
-  textWhite = false,
-}) => (
+const LegendItem: React.FC<LegendItemProps> = ({ color, icon, label }) => (
   <div className="flex items-center gap-2">
     <div
       className={`w-6 h-6 rounded-lg flex items-center justify-center ${color}`}
     >
       {icon}
     </div>
-    <span
-      className={`text-xs ${textWhite ? "text-gray-900" : "text-gray-600"}`}
-    >
-      {label}
-    </span>
+    <span className="text-xs text-slate-600 font-medium">{label}</span>
   </div>
 );
 
@@ -76,18 +66,18 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
 
   if (!results || !startDate || !cycleLength || !periodLength) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6 animate-fade-in">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
-            <CalendarDays className="w-6 h-6 text-white" />
+          <div className="p-2.5 bg-purple-600 rounded-xl text-white">
+            <CalendarDays className="w-5 h-5" />
           </div>
-          <h3 className="text-xl font-bold text-gray-800">
+          <h3 className="text-lg font-bold text-slate-900">
             Calendrier du cycle
           </h3>
         </div>
-        <div className="text-center text-gray-500 py-8">
-          <div className="w-12 h-12 border-4 border-t-purple-500 border-gray-200 rounded-full animate-spin mx-auto mb-4" />
-          <p>Chargement du calendrier...</p>
+        <div className="text-center text-slate-500 py-8">
+          <div className="w-8 h-8 border-3 border-t-purple-600 border-slate-200 rounded-full animate-spin mx-auto mb-3" />
+          <p className="text-xs">Chargement du calendrier...</p>
         </div>
       </div>
     );
@@ -106,20 +96,20 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
   } catch (error) {
     console.error("Erreur lors de la génération du calendrier:", error);
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6">
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-br from-red-500 to-orange-500 rounded-lg">
-            <CalendarDays className="w-6 h-6 text-white" />
+          <div className="p-2.5 bg-rose-600 rounded-xl text-white">
+            <CalendarDays className="w-5 h-5" />
           </div>
-          <h3 className="text-xl font-bold text-gray-800">
+          <h3 className="text-lg font-bold text-slate-900">
             Calendrier du cycle
           </h3>
         </div>
-        <div className="text-center text-red-500 py-8">
-          <p>Erreur lors du chargement du calendrier</p>
+        <div className="text-center text-rose-600 py-8">
+          <p className="text-sm">Erreur lors du chargement du calendrier</p>
           <button
             onClick={() => window.location.reload()}
-            className="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:shadow-lg transition-all duration-300"
+            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-xl text-xs font-semibold hover:bg-purple-700 transition-colors duration-200"
           >
             Recharger la page
           </button>
@@ -130,10 +120,10 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
 
   if (!Array.isArray(calendarDays) || calendarDays.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-lg p-6">
-        <div className="text-center text-gray-500 py-8">
-          <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-          <p>Aucune donnée de calendrier disponible</p>
+      <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+        <div className="text-center text-slate-500 py-8">
+          <Calendar className="w-10 h-10 mx-auto mb-3 text-slate-400" />
+          <p className="text-sm">Aucune donnée de calendrier disponible</p>
         </div>
       </div>
     );
@@ -163,41 +153,41 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
   };
 
   const getDayColor = (day: MonthlyCalendarDay): string => {
-    if (!day.isCurrentMonth) return "bg-gray-50/50 text-gray-300";
+    if (!day.isCurrentMonth) return "bg-slate-50 text-slate-300";
     if (day.isOvulation)
-      return "bg-gradient-to-br from-pink-500 to-rose-500 text-white shadow-lg";
+      return "bg-pink-600 text-white font-semibold";
     if (day.isFertile)
-      return "bg-gradient-to-br from-emerald-100 to-green-100 text-emerald-800 border border-emerald-200";
+      return "bg-emerald-50 text-emerald-800 border border-emerald-200";
     if (day.isPeriod)
-      return "bg-gradient-to-br from-rose-100 to-red-100 text-rose-800 border border-rose-200";
+      return "bg-rose-50 text-rose-800 border border-rose-200";
     if (day.isToday)
-      return "bg-gradient-to-br from-purple-100 to-indigo-100 text-purple-800 border-2 border-purple-500 shadow-md";
-    if (day.isWeekend) return "bg-gray-50 text-gray-600";
-    return "bg-white text-gray-700 hover:bg-gray-50";
+      return "bg-purple-50 text-purple-800 border border-purple-300 font-semibold";
+    if (day.isWeekend) return "bg-slate-50 text-slate-600";
+    return "bg-white text-slate-700 hover:bg-slate-50 border border-slate-100";
   };
 
   const getDayIcon = (day: MonthlyCalendarDay) => {
-    if (day.isOvulation) return <Egg className="w-3 h-3" />;
-    if (day.isPeriod) return <Droplets className="w-3 h-3" />;
-    if (day.isFertile) return <CircleDot className="w-3 h-3" />;
+    if (day.isOvulation) return <Egg className="w-3 h-3 text-white" />;
+    if (day.isPeriod) return <Droplets className="w-3 h-3 text-rose-600" />;
+    if (day.isFertile) return <CircleDot className="w-3 h-3 text-emerald-600" />;
     return null;
   };
 
   return (
-    <div className="bg-white rounded-none md:rounded-2xl shadow-xl p-6 animate-fade-in hover:shadow-2xl transition-shadow duration-300">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl shadow-lg">
-            <CalendarDays className="w-6 h-6 text-white" />
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
+      <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-purple-600 rounded-xl text-white shadow-xs">
+            <CalendarDays className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl font-bold text-slate-900">
               Calendrier du cycle
             </h3>
-            <p className="text-gray-500 text-sm">Visualisation mensuelle</p>
+            <p className="text-slate-500 text-xs">Visualisation mensuelle</p>
           </div>
         </div>
-        <div className="text-sm bg-gradient-to-r from-purple-100 to-pink-100 text-purple-800 px-4 py-2 rounded-full font-semibold shadow-sm">
+        <div className="text-xs bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1 rounded-full font-semibold">
           {cycleLength} jours
         </div>
       </div>
@@ -205,19 +195,19 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
       <div className="flex items-center justify-between mb-6">
         <button
           onClick={goToPreviousMonth}
-          className="p-2 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-colors duration-200 text-slate-600 cursor-pointer"
           aria-label="Mois précédent"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-600" />
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
         <div className="flex items-center gap-3">
-          <h4 className="text-xl font-bold text-gray-900">
+          <h4 className="text-lg font-bold text-slate-900">
             {MONTHS[currentMonth]} {currentYear}
           </h4>
           <button
             onClick={goToToday}
-            className="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full hover:bg-purple-200 transition-colors font-medium"
+            className="text-xs bg-purple-50 text-purple-700 border border-purple-200 px-2.5 py-1 rounded-lg hover:bg-purple-100 transition-colors duration-200 font-medium cursor-pointer"
           >
             Aujourd'hui
           </button>
@@ -225,10 +215,10 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
 
         <button
           onClick={goToNextMonth}
-          className="p-2 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
+          className="p-2 hover:bg-slate-100 rounded-xl transition-colors duration-200 text-slate-600 cursor-pointer"
           aria-label="Mois suivant"
         >
-          <ChevronRight className="w-5 h-5 text-gray-600" />
+          <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
@@ -236,8 +226,8 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
         {WEEKDAYS.map((dayName, index) => (
           <div
             key={index}
-            className={`text-center font-bold py-2 text-sm ${
-              index >= 5 ? "text-pink-400" : "text-gray-400"
+            className={`text-center font-bold py-1.5 text-xs ${
+              index >= 5 ? "text-slate-400" : "text-slate-500"
             }`}
           >
             {dayName}
@@ -255,17 +245,15 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
               role="gridcell"
               aria-label={`${dayItem.dayOfMonth} ${MONTHS[currentMonth]}${dayItem.isOvulation ? " - Ovulation" : ""}${dayItem.isFertile ? " - Jour fertile" : ""}${dayItem.isPeriod ? " - Règles" : ""}${dayItem.isToday ? " - Aujourd\u2019hui" : ""}`}
               className={`
-                relative p-2 md:p-3 rounded-xl text-center transition-all duration-200
-                hover:scale-105 hover:shadow-lg hover:z-10 cursor-default
+                relative p-2 rounded-xl text-center transition-colors duration-200 cursor-default
                 ${getDayColor(dayItem)}
                 ${dayItem.isCurrentMonth ? "" : "opacity-40"}
-                transform hover:-translate-y-0.5
               `}
             >
               <div
-                className={`font-bold text-sm md:text-base mb-0.5 ${
-                  dayItem.isToday
-                    ? "bg-purple-600 text-white w-7 h-7 rounded-full flex items-center justify-center mx-auto"
+                className={`font-bold text-xs md:text-sm mb-0.5 ${
+                  dayItem.isToday && !dayItem.isOvulation
+                    ? "bg-purple-600 text-white w-6 h-6 rounded-full flex items-center justify-center mx-auto"
                     : ""
                 }`}
               >
@@ -273,7 +261,11 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
               </div>
 
               {dayItem.cycleDay > 0 && dayItem.isCurrentMonth && (
-                <div className="text-[10px] text-gray-400 mb-1">
+                <div
+                  className={`text-[9px] mb-0.5 ${
+                    dayItem.isOvulation ? "text-white/90" : "text-slate-400"
+                  }`}
+                >
                   J{dayItem.cycleDay}
                 </div>
               )}
@@ -281,46 +273,39 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
               {icon && dayItem.isCurrentMonth && (
                 <div className="flex justify-center mt-0.5">{icon}</div>
               )}
-
-              {dayItem.isOvulation && dayItem.isCurrentMonth && (
-                <div className="absolute -top-0.5 -left-0.5 w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
-              )}
             </div>
           );
         })}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-5 mt-5 border-t border-gray-100">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-5 mt-5 border-t border-slate-100">
         <LegendItem
-          color="bg-gradient-to-br from-rose-100 to-red-100 border-rose-200"
+          color="bg-rose-50 border border-rose-200"
           icon={<Droplets className="w-3.5 h-3.5 text-rose-600" />}
           label="Règles"
         />
         <LegendItem
-          color="bg-gradient-to-br from-emerald-100 to-green-100 border-emerald-200"
+          color="bg-emerald-50 border border-emerald-200"
           icon={<CircleDot className="w-3.5 h-3.5 text-emerald-600" />}
           label="Fertile"
         />
         <LegendItem
-          color="bg-gradient-to-br from-pink-500 to-rose-500"
+          color="bg-pink-600"
           icon={<Egg className="w-3.5 h-3.5 text-white" />}
           label="Ovulation"
-          textWhite
         />
         <LegendItem
-          color="bg-gradient-to-br from-purple-100 to-indigo-100 border-purple-500"
-          icon={
-            <div className="w-2 h-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full" />
-          }
+          color="bg-purple-50 border border-purple-300"
+          icon={<div className="w-2 h-2 bg-purple-600 rounded-full" />}
           label="Aujourd'hui"
         />
       </div>
 
-      <div className="mt-5 pt-5 border-t border-gray-100">
+      <div className="mt-5 pt-5 border-t border-slate-100">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 rounded-xl">
-            <div className="text-xs text-gray-500">Période fertile</div>
-            <div className="font-bold text-gray-900 text-sm">
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+            <div className="text-[11px] text-slate-500 font-medium">Période fertile</div>
+            <div className="font-bold text-slate-900 text-xs md:text-sm mt-0.5">
               {new Date(results.fertileWindow.start).getDate()} -{" "}
               {new Date(results.fertileWindow.end).getDate()}{" "}
               {MONTHS[new Date(results.fertileWindow.start).getMonth()]
@@ -328,27 +313,27 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
                 .toLowerCase()}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 rounded-xl">
-            <div className="text-xs text-gray-500">Ovulation</div>
-            <div className="font-bold text-gray-900 text-sm">
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+            <div className="text-[11px] text-slate-500 font-medium">Ovulation</div>
+            <div className="font-bold text-slate-900 text-xs md:text-sm mt-0.5">
               {new Date(results.ovulationDate).getDate()}{" "}
               {MONTHS[new Date(results.ovulationDate).getMonth()]
                 .slice(0, 3)
                 .toLowerCase()}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 rounded-xl">
-            <div className="text-xs text-gray-500">Prochaines règles</div>
-            <div className="font-bold text-gray-900 text-sm">
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+            <div className="text-[11px] text-slate-500 font-medium">Prochaines règles</div>
+            <div className="font-bold text-slate-900 text-xs md:text-sm mt-0.5">
               {new Date(results.nextPeriod).getDate()}{" "}
               {MONTHS[new Date(results.nextPeriod).getMonth()]
                 .slice(0, 3)
                 .toLowerCase()}
             </div>
           </div>
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 rounded-xl">
-            <div className="text-xs text-gray-500">Cycle actuel</div>
-            <div className="font-bold text-gray-900 text-sm">
+          <div className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+            <div className="text-[11px] text-slate-500 font-medium">Cycle actuel</div>
+            <div className="font-bold text-slate-900 text-xs md:text-sm mt-0.5">
               J{results.cycleDay > 0 ? results.cycleDay : "--"}
             </div>
           </div>
