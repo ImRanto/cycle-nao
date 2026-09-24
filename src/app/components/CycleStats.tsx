@@ -36,8 +36,8 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
           <TrendingUp className="w-5 h-5 text-purple-600" />
         </div>
         <div>
-          <h2 className="text-base font-semibold text-slate-900">Prédictions</h2>
-          <p className="text-xs text-slate-500">Calculs automatiques du cycle</p>
+          <h2 className="text-base font-semibold text-slate-900">Prochaines dates</h2>
+          <p className="text-xs text-slate-500">Dates clés de votre cycle</p>
         </div>
       </div>
 
@@ -49,7 +49,7 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
             </div>
             <div>
               <h3 className="font-semibold text-slate-900 text-xs md:text-sm">Ovulation</h3>
-              <p className="text-[11px] text-slate-500">Fertilité maximale</p>
+              <p className="text-[11px] text-slate-500">Jour estimé de l'ovulation</p>
             </div>
           </div>
 
@@ -68,7 +68,7 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
 
           <div className="mt-2 text-center">
             <span className="inline-block bg-pink-50 text-pink-700 text-xs font-medium px-2.5 py-0.5 rounded-full border border-pink-200">
-              Période critique
+              Pic de fertilité
             </span>
           </div>
         </div>
@@ -79,8 +79,8 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
               <Heart className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-semibold text-slate-900 text-xs md:text-sm">Fenêtre fertile</h3>
-              <p className="text-[11px] text-slate-500">Meilleure période pour concevoir</p>
+              <h3 className="font-semibold text-slate-900 text-xs md:text-sm">Période fertile</h3>
+              <p className="text-[11px] text-slate-500">Jours propices à la conception</p>
             </div>
           </div>
 
@@ -89,7 +89,7 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
               {formatFertileRange()}
             </div>
             <p className="text-[11px] text-slate-500 mt-0.5">
-              7 jours de fertilité
+              7 jours identifiés
             </p>
           </div>
 
@@ -121,7 +121,7 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
             </div>
             <div>
               <h3 className="font-semibold text-slate-900 text-xs md:text-sm">Prochaines règles</h3>
-              <p className="text-[11px] text-slate-500">Préparation recommandée</p>
+              <p className="text-[11px] text-slate-500">Début de votre prochain cycle</p>
             </div>
           </div>
 
@@ -141,7 +141,7 @@ const CycleStats: React.FC<CycleStatsProps> = ({ results }) => {
           <div className="mt-2 text-center">
             <span className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs font-medium px-2.5 py-0.5 rounded-full border border-indigo-200">
               <Droplets className="w-3 h-3" />
-              Période menstruelle à venir
+              Prochain cycle
             </span>
           </div>
         </div>

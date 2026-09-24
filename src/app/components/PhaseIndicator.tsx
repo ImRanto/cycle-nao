@@ -24,7 +24,7 @@ const PhaseIndicator: React.FC<PhaseIndicatorProps> = ({
           <div className="w-10 h-10 bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-center">
             <Moon className="w-5 h-5 text-purple-600" />
           </div>
-          <h3 className="text-base font-semibold text-slate-900">Phase du cycle</h3>
+          <h3 className="text-base font-semibold text-slate-900">Où en êtes-vous ?</h3>
         </div>
         <div className="px-3 py-1 rounded-full bg-purple-50 text-purple-700 border border-purple-200 font-semibold text-xs">
           {currentDetails.icon} {currentDetails.name}

@@ -184,7 +184,7 @@ const CycleCalendar: React.FC<CycleCalendarProps> = ({
             <h3 className="text-xl font-bold text-slate-900">
               Calendrier du cycle
             </h3>
-            <p className="text-slate-500 text-xs">Visualisation mensuelle</p>
+            <p className="text-slate-500 text-xs">Vue du mois</p>
           </div>
         </div>
         <div className="text-xs bg-slate-100 text-slate-700 border border-slate-200 px-3 py-1 rounded-full font-semibold">

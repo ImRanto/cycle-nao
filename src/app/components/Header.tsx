@@ -34,7 +34,7 @@ const Header: React.FC = () => {
               <div className="w-5 h-5 bg-emerald-600 rounded-md flex items-center justify-center">
                 <Activity size={12} className="text-white" />
               </div>
-              <span>Santé connectée & Privée</span>
+              <span>Suivi simple & privé</span>
               <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
             </div>
 
@@ -43,8 +43,7 @@ const Header: React.FC = () => {
             </h1>
 
             <p className="text-base md:text-lg text-slate-300 leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8">
-              Reprenez le contrôle. Une approche intuitive et élégante pour
-              suivre votre cycle et comprendre votre corps.
+              Un moyen simple et clair pour suivre votre cycle menstruel et prévoir vos prochaines dates.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -68,20 +67,20 @@ const Header: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 w-full max-w-sm">
             <FeatureCard
               icon={<Calendar size={20} />}
-              title="Cycle Intelligent"
-              desc="Algorithmes prédictifs avancés"
+              title="Suivi du cycle"
+              desc="Calcul automatique des dates"
               badgeBg="bg-indigo-600"
             />
             <FeatureCard
               icon={<Sparkles size={20} />}
-              title="Prédictions"
-              desc="Anticipez vos phases avec précision"
+              title="Repères visuels"
+              desc="Visualisez clairement chaque phase"
               badgeBg="bg-amber-600"
             />
             <FeatureCard
               icon={<ShieldCheck size={20} />}
               title="Confidentialité"
-              desc="Données 100% sécurisées & locales"
+              desc="Données stockées uniquement chez vous"
               badgeBg="bg-emerald-600"
             />
           </div>
